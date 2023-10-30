@@ -25,10 +25,11 @@ export default class Lenis {
      * @property {number} [wheelMultiplier]
      * @property {boolean} [normalizeWheel]
      * @property {boolean} [autoResize]
+     * @property {boolean} [reverseScrollDir]
      *
      * @param {LenisOptions}
      */
-    constructor({ wrapper, content, wheelEventsTarget, eventsTarget, smoothWheel, smoothTouch, syncTouch, syncTouchLerp, __iosNoInertiaSyncTouchLerp, touchInertiaMultiplier, duration, easing, lerp, infinite, orientation, gestureOrientation, touchMultiplier, wheelMultiplier, normalizeWheel, autoResize, }?: {
+    constructor({ wrapper, content, wheelEventsTarget, eventsTarget, smoothWheel, smoothTouch, syncTouch, syncTouchLerp, __iosNoInertiaSyncTouchLerp, touchInertiaMultiplier, duration, easing, lerp, infinite, orientation, gestureOrientation, touchMultiplier, wheelMultiplier, normalizeWheel, autoResize, reverseScrollDir, }?: {
         wrapper?: Window | HTMLElement;
         content?: HTMLElement;
         wheelEventsTarget?: Window | HTMLElement;
@@ -49,6 +50,7 @@ export default class Lenis {
         wheelMultiplier?: number;
         normalizeWheel?: boolean;
         autoResize?: boolean;
+        reverseScrollDir?: boolean;
     });
     options: {
         wrapper: Window | HTMLElement;
@@ -71,6 +73,7 @@ export default class Lenis {
         wheelMultiplier: number;
         normalizeWheel: boolean;
         autoResize: boolean;
+        reverseScrollDir: boolean;
     };
     animate: Animate;
     emitter: Emitter;

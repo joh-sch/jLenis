@@ -392,6 +392,7 @@
      * @property {number} [wheelMultiplier]
      * @property {boolean} [normalizeWheel]
      * @property {boolean} [autoResize]
+     * @property {boolean} [reverseScrollDir]
      *
      * @param {LenisOptions}
      */
@@ -438,7 +439,9 @@
         _ref$normalizeWheel = _ref.normalizeWheel,
         normalizeWheel = _ref$normalizeWheel === void 0 ? false : _ref$normalizeWheel,
         _ref$autoResize = _ref.autoResize,
-        autoResize = _ref$autoResize === void 0 ? true : _ref$autoResize;
+        autoResize = _ref$autoResize === void 0 ? true : _ref$autoResize,
+        _ref$reverseScrollDir = _ref.reverseScrollDir,
+        reverseScrollDir = _ref$reverseScrollDir === void 0 ? false : _ref$reverseScrollDir;
       this.onVirtualScroll = function (_ref2) {
         var deltaX = _ref2.deltaX,
           deltaY = _ref2.deltaY,
@@ -486,6 +489,11 @@
         if (hasTouchInertia) {
           delta = _this.velocity * _this.options.touchInertiaMultiplier;
         }
+
+        // If applicable, invert delta to scroll in opposite direction...
+        if (_this.options.reverseScrollDir) delta = -delta;
+
+        // Updt. scroll value...
         _this.scrollTo(_this.targetScroll + delta, _extends({
           programmatic: false
         }, syncTouch && {
@@ -502,6 +510,7 @@
         }
       };
       window.lenisVersion = version;
+      console.log('creating jLenis inst.', version);
 
       // if wrapper is html or body, fallback to window
       if (wrapper === document.documentElement || wrapper === document.body) {
@@ -527,7 +536,8 @@
         touchMultiplier: touchMultiplier,
         wheelMultiplier: wheelMultiplier,
         normalizeWheel: normalizeWheel,
-        autoResize: autoResize
+        autoResize: autoResize,
+        reverseScrollDir: reverseScrollDir
       };
       this.animate = new Animate();
       this.emitter = new Emitter();
