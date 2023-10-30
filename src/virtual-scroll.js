@@ -18,16 +18,16 @@ export class VirtualScroll {
 
     this.emitter = new Emitter()
 
-    this.element.addEventListener('wheel', this.onWheel, { passive: false })
-    this.element.addEventListener('touchstart', this.onTouchStart, {
-      passive: false,
-    })
-    this.element.addEventListener('touchmove', this.onTouchMove, {
-      passive: false,
-    })
-    this.element.addEventListener('touchend', this.onTouchEnd, {
-      passive: false,
-    })
+    // this.element.addEventListener('wheel', this.onWheel, { passive: false })
+    // this.element.addEventListener('touchstart', this.onTouchStart, {
+    //   passive: false,
+    // })
+    // this.element.addEventListener('touchmove', this.onTouchMove, {
+    //   passive: false,
+    // })
+    // this.element.addEventListener('touchend', this.onTouchEnd, {
+    //   passive: false,
+    // })
   }
 
   // Add an event listener for the given event and callback
@@ -113,5 +113,38 @@ export class VirtualScroll {
     deltaY *= this.wheelMultiplier
 
     this.emitter.emit('scroll', { deltaX, deltaY, event })
+  }
+
+  ////////////////////
+  // Custom methods //
+  ////////////////////
+
+  get element() {
+    return this._element
+  }
+
+  set element(ELEMENT) {
+    // Setup...
+    const oldElement = this._element
+    const newElement = ELEMENT
+    const elConfig = { passive: false }
+    console.log('Updt. virtual scroll element')
+
+    // Clean up old element (remove event listeners, etc.)...
+    if (oldElement) {
+      oldElement.removeEventListener('wheel', this.onWheel, elConfig)
+      oldElement.removeEventListener('touchstart', this.onTouchStart, elConfig)
+      oldElement.removeEventListener('touchmove', this.onTouchMove, elConfig)
+      oldElement.removeEventListener('touchend', this.onTouchEnd, elConfig)
+    }
+
+    // Updt. element...
+    this._element = newElement
+
+    // Add event listeners to new element...
+    newElement.addEventListener('wheel', this.onWheel, elConfig)
+    newElement.addEventListener('touchstart', this.onTouchStart, elConfig)
+    newElement.addEventListener('touchmove', this.onTouchMove, elConfig)
+    newElement.addEventListener('touchend', this.onTouchEnd, elConfig)
   }
 }

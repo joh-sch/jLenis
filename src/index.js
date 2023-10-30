@@ -74,8 +74,6 @@ export default class Lenis {
   } = {}) {
     window.lenisVersion = version
 
-    console.log('creating jLenis inst.', version)
-
     // if wrapper is html or body, fallback to window
     if (wrapper === document.documentElement || wrapper === document.body) {
       wrapper = window
@@ -488,5 +486,14 @@ export default class Lenis {
   toggleClass(name, value) {
     this.rootElement.classList.toggle(name, value)
     this.emitter.emit('className change', this)
+  }
+
+  ////////////////////
+  // Custom methods //
+  ////////////////////
+
+  set eventsTarget(ELEMENT) {
+    console.log('Updt. eventsTarget by setting el. of virtualScroll inst.')
+    this.virtualScroll.element = ELEMENT
   }
 }
