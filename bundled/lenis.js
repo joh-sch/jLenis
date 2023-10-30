@@ -313,18 +313,17 @@
         y: null
       };
       this.emitter = new Emitter();
-      this.element.addEventListener('wheel', this.onWheel, {
-        passive: false
-      });
-      this.element.addEventListener('touchstart', this.onTouchStart, {
-        passive: false
-      });
-      this.element.addEventListener('touchmove', this.onTouchMove, {
-        passive: false
-      });
-      this.element.addEventListener('touchend', this.onTouchEnd, {
-        passive: false
-      });
+
+      // this.element.addEventListener('wheel', this.onWheel, { passive: false })
+      // this.element.addEventListener('touchstart', this.onTouchStart, {
+      //   passive: false,
+      // })
+      // this.element.addEventListener('touchmove', this.onTouchMove, {
+      //   passive: false,
+      // })
+      // this.element.addEventListener('touchend', this.onTouchEnd, {
+      //   passive: false,
+      // })
     }
 
     // Add an event listener for the given event and callback
@@ -350,6 +349,42 @@
         passive: false
       });
     };
+    _createClass(VirtualScroll, [{
+      key: "element",
+      get:
+      ////////////////////
+      // Custom methods //
+      ////////////////////
+      function get() {
+        return this._element;
+      },
+      set: function set(ELEMENT) {
+        // Setup...
+        var oldElement = this._element;
+        var newElement = ELEMENT;
+        var elConfig = {
+          passive: false
+        };
+        console.log('Updt. virtual scroll element');
+
+        // Clean up old element (remove event listeners, etc.)...
+        if (oldElement) {
+          oldElement.removeEventListener('wheel', this.onWheel, elConfig);
+          oldElement.removeEventListener('touchstart', this.onTouchStart, elConfig);
+          oldElement.removeEventListener('touchmove', this.onTouchMove, elConfig);
+          oldElement.removeEventListener('touchend', this.onTouchEnd, elConfig);
+        }
+
+        // Updt. element...
+        this._element = newElement;
+
+        // Add event listeners to new element...
+        newElement.addEventListener('wheel', this.onWheel, elConfig);
+        newElement.addEventListener('touchstart', this.onTouchStart, elConfig);
+        newElement.addEventListener('touchmove', this.onTouchMove, elConfig);
+        newElement.addEventListener('touchend', this.onTouchEnd, elConfig);
+      }
+    }]);
     return VirtualScroll;
   }();
 
@@ -510,7 +545,6 @@
         }
       };
       window.lenisVersion = version;
-      console.log('creating jLenis inst.', version);
 
       // if wrapper is html or body, fallback to window
       if (wrapper === document.documentElement || wrapper === document.body) {
@@ -722,7 +756,12 @@
     _proto.toggleClass = function toggleClass(name, value) {
       this.rootElement.classList.toggle(name, value);
       this.emitter.emit('className change', this);
-    };
+    }
+
+    ////////////////////
+    // Custom methods //
+    ////////////////////
+    ;
     _createClass(Lenis, [{
       key: "rootElement",
       get: function get() {
@@ -808,6 +847,12 @@
         if (this.isScrolling) className += ' lenis-scrolling';
         if (this.isSmooth) className += ' lenis-smooth';
         return className;
+      }
+    }, {
+      key: "eventsTarget",
+      set: function set(ELEMENT) {
+        console.log('Updt. eventsTarget by setting el. of virtualScroll inst.');
+        this.virtualScroll.element = ELEMENT;
       }
     }]);
     return Lenis;

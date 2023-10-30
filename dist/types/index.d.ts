@@ -131,6 +131,7 @@ export default class Lenis {
     __isLocked: any;
     get className(): string;
     toggleClass(name: any, value: any): void;
+    set eventsTarget(arg: any);
 }
 import { Animate } from './animate';
 import { Emitter } from './emitter';

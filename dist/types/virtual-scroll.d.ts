@@ -4,7 +4,8 @@ export class VirtualScroll {
         touchMultiplier?: number;
         normalizeWheel?: boolean;
     });
-    element: any;
+    set element(arg: any);
+    get element(): any;
     wheelMultiplier: number;
     touchMultiplier: number;
     normalizeWheel: boolean;
@@ -26,5 +27,6 @@ export class VirtualScroll {
     onTouchMove: (event: any) => void;
     onTouchEnd: (event: any) => void;
     onWheel: (event: any) => void;
+    _element: any;
 }
 import { Emitter } from './emitter';
