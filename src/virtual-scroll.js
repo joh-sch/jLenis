@@ -115,9 +115,9 @@ export class VirtualScroll {
     this.emitter.emit('scroll', { deltaX, deltaY, event })
   }
 
-  ////////////////////
-  // Custom methods //
-  ////////////////////
+  ////////////////////////////////////
+  // Custom getters/setters/methods //
+  ////////////////////////////////////
 
   get element() {
     return this._element
