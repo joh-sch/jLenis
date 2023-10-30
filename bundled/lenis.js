@@ -352,9 +352,9 @@
     _createClass(VirtualScroll, [{
       key: "element",
       get:
-      ////////////////////
-      // Custom methods //
-      ////////////////////
+      ////////////////////////////////////
+      // Custom getters/setters/methods //
+      ////////////////////////////////////
       function get() {
         return this._element;
       },
