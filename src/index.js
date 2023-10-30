@@ -45,6 +45,7 @@ export default class Lenis {
    * @property {number} [wheelMultiplier]
    * @property {boolean} [normalizeWheel]
    * @property {boolean} [autoResize]
+   * @property {boolean} [reverseScrollDir]
    *
    * @param {LenisOptions}
    */
@@ -69,8 +70,11 @@ export default class Lenis {
     wheelMultiplier = 1,
     normalizeWheel = false,
     autoResize = true,
+    reverseScrollDir = false,
   } = {}) {
     window.lenisVersion = version
+
+    console.log('creating jLenis inst.', version)
 
     // if wrapper is html or body, fallback to window
     if (wrapper === document.documentElement || wrapper === document.body) {
@@ -98,6 +102,7 @@ export default class Lenis {
       wheelMultiplier,
       normalizeWheel,
       autoResize,
+      reverseScrollDir,
     }
 
     this.animate = new Animate()
@@ -225,6 +230,10 @@ export default class Lenis {
       delta = this.velocity * this.options.touchInertiaMultiplier
     }
 
+    // If applicable, invert delta to scroll in opposite direction...
+    if (this.options.reverseScrollDir) delta = -delta
+
+    // Updt. scroll value...
     this.scrollTo(this.targetScroll + delta, {
       programmatic: false,
       ...(syncTouch && {
